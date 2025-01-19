@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+  <header>
+    <h1>Welcome to Your Dashboard</h1>
+    <button id="logout-button">Log Out</button>
+  </header>
+  <main>
+    <p class="welcome">Welcome,  <span id="user-display"></span> ! You are securely logged in.</p>
+    
+
+    <div class="home-page">
+      
+      <div class="account-details">
+      <p>Account Number: <span id="accountNumber"></span></p>
+      <p>Branch Name: <span id="branchName"></span></p>
+      </div>
+      <div class="personal-details">
+        <div class="personal-info">
+          <p>Name: <span id="name"></span></p>
+          <p>Date of Birth: <span id="dob"></span></p>
+        </div>
+        <div class="personal-info">
+          <p>Gender: <span id="gender"></span></p>
+          <p>Address: <span id="address"></span></p>
+      </div>
+
+      <div class="balance-check">
+        <h3>Current Balance: ₹<span id="current-balance">0</span></h3>
+      </div>
+  
+      <div class="transaction-options">
+        <h3>Make a Transaction</h3>
+        <label for="transaction-type">Select Transaction Type:</label>
+        <select id="transaction-type">
+          <option value="deposit">Deposit</option>
+          <option value="withdraw">Withdraw</option>
+        </select>
+  
+        <label for="amount">Enter Amount:</label>
+        <input type="number" id="amount" min="1" required>
+  
+        <button id="make-transaction">Submit</button>
+      </div>
+  
+      <div class="transaction-history">
+        <h3>Transaction History</h3>
+        <ul id="transaction-list"></ul>
+      </div>
+  
+      
+    </div>
+  </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

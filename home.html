@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="home-page">
+      <h1>Welcome, <span id="userName"></span></h1>
+      <p>Account Number: <span id="accountNumber"></span></p>
+      <p>Branch Name: <span id="branchName"></span></p>
+
+      <div class="features">
+          <button id="viewTransactionHistory">Transaction History</button>
+          <button id="checkBalance">Check Balance</button>
+          <button id="deposit">Deposit</button>
+          <button id="withdraw">Withdraw</button>
+      </div>
+
+      <div id="transactionHistory" class="hidden">
+          <!-- Transaction history content here -->
+      </div>
+
+      <div id="balanceCheck" class="hidden">
+          <!-- Balance check content with PIN -->
+      </div>
+
+      <div id="depositSection" class="hidden">
+          <!-- Deposit form/content -->
+      </div>
+
+      <div id="withdrawSection" class="hidden">
+          <!-- Withdrawal form/content -->
+      </div>
+    </div>
+    <script src="script.js">
+    </script>
+</body>
+</html>

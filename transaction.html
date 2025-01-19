@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transactions</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Bank Transactions</h1>
+  </header>
+  <main>
+    <h2>Welcome <span id="username"></span></h2>
+    <div class="balance-check">
+      <h3>Current Balance: ₹<span id="current-balance">0</span></h3>
+    </div>
+
+    <div class="transaction-options">
+      <h3>Make a Transaction</h3>
+      <label for="transaction-type">Select Transaction Type:</label>
+      <select id="transaction-type">
+        <option value="deposit">Deposit</option>
+        <option value="withdraw">Withdraw</option>
+      </select>
+
+      <label for="amount">Enter Amount:</label>
+      <input type="number" id="amount" min="1" required>
+
+      <button id="make-transaction">Submit</button>
+    </div>
+
+    <div class="transaction-history">
+      <h3>Transaction History</h3>
+      <ul id="transaction-list"></ul>
+    </div>
+
+    <button id="logout-button">Log Out</button>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
