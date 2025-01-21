@@ -200,17 +200,17 @@ nav .signin:hover {
   position: absolute;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index:1;
   top: 100%;
-  right:0;
+  right: 0;
 }
 
 
 .dropdown-content a {
   color: blue;
   display: block;
-  padding: 10px;
+  padding:5px;
   text-decoration: none;
+  font-size: 13px;
 }
 
 .dropdown:hover .dropdown-content {
@@ -306,7 +306,7 @@ nav .signin:hover {
   height: 100%;
 }
 
-.sides img {
+.slides img {
   width:fit-content;
   height: auto;
   border-radius: 10px;
@@ -375,11 +375,12 @@ nav .signin:hover {
 .personal-info {
   display: flex;
   justify-content:space-between;
+  margin-right: 200px;
 }
 
 #logout-button {
   position: absolute;
-  top: 20px;
+  top: 140px;
   right: 20px;
   padding: 10px 20px;
   cursor: pointer;
@@ -409,6 +410,7 @@ nav .signin:hover {
 }
 
 #transaction-list {
+  display: none;
   margin-top: 10px;
   padding: 0;
   list-style-type: none;
@@ -418,9 +420,178 @@ nav .signin:hover {
   margin: 5px 0;
 }
 
-/* 
-button:hover {
-  background-color: #d32f2f;
-} */
+.horizontal-line {
+  /* border-top: 2px solid #000; 
+  margin-top: 10px;  */
+  padding: 10px;
+  background-color: blue;;
+}
+
+.heading {
+  color: blue;
+  text-align: center;
+}
+#login-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* text-align: center; */
+  align-items: center;
+   padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #dadce9; 
+}
 
 
+
+#register-form button {
+  background: #0047ab;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+}
+
+#register-form button:hover {
+  background: #003b91;
+} 
+
+.container {
+  background-color:#dadce9;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  /* width: 100%;
+  max-width: 400px; */
+  box-sizing: border-box;
+  
+}
+
+.container h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+#user-details-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+.form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  width: auto;
+  margin-left: 30px;
+}
+.btn {
+  padding: 12px;
+  background-color: #007bff; /* Primary button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.foot {
+  background:blue;
+  padding: 10px 10px;
+  color: white;
+}
+
+.social-media-icons {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%); /* Center icons vertically */
+  z-index: 1000; /* Make sure the icons are on top */
+}
+
+.social-media-icons a {
+  display: block;
+  margin: 10px 0;
+}
+
+.social-media-icons img {
+  width: 40px; /* Adjust the size of the icons */
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.social-media-icons img:hover {
+  transform: scale(1.1); /* Add a hover effect */
+}
+
+
+.personal_faq {
+  margin: 30px 30px;
+  padding-bottom: 30px;
+}
+
+.personal_faq h3{
+  font-weight: bold;
+}
+
+.question {
+  font-weight: bold;
+}
+
+.contact {
+  margin: 20px 20px;
+  background-image: url('images/contact_us.png');
+  background-size: cover;
+
+}
+
+.contact a {
+  color: red;
+}
+
+.contact-content {
+  margin-right: 600px;
+}
+.contact h2 {
+  color: blue;
+
+}
+.contact h1 {
+  color: red;
+}
+
+#toggle-btn {
+  background-color: rgb(32, 95, 151);
+  color: white;
+  border: none;
+  padding: 20px;
+  margin-left: 350px;
+  margin-right: 350px;
+  font-size: 16px;
+
+}
+
+.transaction-history {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}

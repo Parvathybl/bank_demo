@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <header>
+      <div class="head">
+          <img src="images\State_Bank_of_India_logo.svg.jpg" alt="bank-logo">   
+      </div>
+      </header>
+      <div class="horizontal-line"></div>
     <div class="container">
       <h2>Complete Your Profile</h2>
       <form id="user-details-form">
@@ -14,8 +20,13 @@
           <label for="name">Full Name: </label>
           <input type="text" id="name" required>
         </div>
-          <div class="form-group">Date of birth: 
-          <input type="text" id="dob" required>
+          <div class="form-group">
+            <label>Date of birth: </label>
+          <input type="date" id="dob" required>
+        </div>
+        <div class="form-group">
+          <label>Father's Name: </label>
+          <input type="text" id="father_name" required>
         </div>
 
         <div class="form-group">
@@ -27,10 +38,30 @@
             <option value="other">other</option>
           </select>
         </div>
+        <div class="form-group">
+          <label for="phone">Phone Number: </label>
+          <input id="phone" required></input>
+        </div>
+        <div class="form-group">
+          <label for="mail">Email: </label>
+          <input type="email" id="mail" required>
+        </div>
 
         <div class="form-group">
           <label for="address">Address: </label>
           <textarea id="address" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="account_type">Account Type: </label>
+          <select id="account_type" required>
+            <option value="">Select an option</option>
+            <option value="Savings Account">Savings Account</option>
+            <option value="Current Account">Current Account></option>
+            <option value="Fixed-Deposit Account">Fixed-Deposit Account</option>
+            <option value="NRI Account">NRI Account</option>
+            <option value="Demat Account">Demat Account</option>
+
+          </select>
         </div>
         <button type="submit" class="btn">Submit Details</button>
       </form>

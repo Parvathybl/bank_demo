@@ -1,4 +1,40 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+  if (document.querySelector(".slideshow")) {
+    let slideIndex = 0;
+    showSlides();
+
+    // Add click handlers for prev/next buttons
+    document.querySelector(".prev").addEventListener("click", () => changeSlide(-1));
+    document.querySelector(".next").addEventListener("click", () => changeSlide(1));
+
+    function changeSlide(n) {
+      slideIndex += n;
+      showSlides();
+    }
+
+    function showSlides() {
+      const slides = document.getElementsByClassName("slides");
+      
+      // Reset slideIndex if it goes out of bounds
+      if (slideIndex >= slides.length) slideIndex = 0;
+      if (slideIndex < 0) slideIndex = slides.length - 1;
+      
+      // Hide all slides
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      
+      // Show the current slide
+      slides[slideIndex].style.display = "block";
+    }
+
+    // Automatic slideshow
+    setInterval(() => {
+      slideIndex++;
+      showSlides();
+    }, 3000);
+  }
   // Only initialize dashboard elements if we're on the dashboard page
   if (window.location.pathname.includes("dashboard.html")) {
     // Dashboard Elements
@@ -13,11 +49,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const branchName = document.getElementById("branchName");
     const nameElement = document.getElementById("name");
     const dobElement = document.getElementById("dob");
+    const fathernameElement = document.getElementById("father_name");
+    const phoneElement = document.getElementById("phone");
+    const mailElement = document.getElementById("mail");
     const genderElement = document.getElementById("gender");
     const addressElement = document.getElementById("address");
-
+    const accounttype = document.getElementById("account_type");
+   
     // Initialize dashboard
     loadDashboard();
+
 
     // Transaction handler
     if (makeTransactionButton) {
@@ -63,9 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
-
-  
-
   // Login form handler
   const loginForm = document.querySelector("#login-form");
   if (loginForm) {
@@ -151,10 +189,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const nameInput = document.getElementById("name");
             const dobInput = document.getElementById("dob");
+            const fatherNameInput = document.getElementById("father_name");
+            const phoneInput = document.getElementById("phone");
+            const mailInput = document.getElementById("mail");
             const genderInput = document.getElementById("gender");
             const addressInput = document.getElementById("address");
+            const accounttypeInput = document.getElementById("account_type");
 
-            if (!nameInput || !dobInput || !genderInput || !addressInput) {
+            if (!nameInput || !dobInput || !genderInput || !addressInput || !fatherNameInput || !phoneInput || !mailInput || !accounttypeInput) {
                 console.error("Required user details form elements not found");
                 return;
             }
@@ -166,8 +208,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 branchName: "Main Branch",
                 name: nameInput.value,
                 dob: dobInput.value,
+                father_name: fatherNameInput.value,
+                phone: phoneInput.value,
+                mail: mailInput.value,
                 gender: genderInput.value,
                 address: addressInput.value,
+                account_type: accounttypeInput.value,
                 balance: 0,
                 transactions: []
             };
@@ -185,7 +231,19 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = 'login.html';
         });
     }
-});
+
+    document.getElementById("toggle-btn").onclick=function () {
+      const transactionList=document.getElementById("transaction-list");
+    
+      if (transactionList.style.display === "none") {
+        transactionList.style.display ="block";
+      }else {
+        transactionList.style.display="none";
+      }
+    };
+
+  });
+
 
 // Helper functions
 function generateAccountNumber() {
@@ -228,8 +286,12 @@ function loadDashboard() {
     "current-balance": userData.balance,
     "name": userData.name,
     "dob": userData.dob,
+    "father_name":userData.father_name,
     "gender": userData.gender,
-    "address": userData.address
+    "address": userData.address,
+    "phone": userData.phone,
+    "mail": userData.mail,
+    "account_type":userData.account_type
   };
 
   for (const [id, value] of Object.entries(elements)) {
@@ -255,6 +317,43 @@ const defaultUserData = {
   transactions: [],
   name: "",
   dob: "",
+  father_name: "",
+  phone:"",
+  mail:"",
   gender: "",
-  address: ""
+  address: "",
+  account_type:"",
 };
+
+
+
+function animateCounter(id, start, end, duration) {
+  const element = document.getElementById(id);
+
+  if (!element) {
+    console.warn(`Element with id '${id}' not found for counter animation`);
+    return;
+  }
+  let current = start;
+  const increment = (end - start) / (duration / 10);
+
+  const interval = setInterval(() => {
+    current += increment;
+    if (current >= end) {
+      clearInterval(interval);
+      current = end;
+    }
+    try {
+      element.textContent = Math.floor(current).toLocaleString();
+    } catch (error) {
+      console.warn(`Error updating counter for '${id}':`, error);
+      clearInterval(interval);
+    }
+  }, 10);
+    
+}
+animateCounter("customers", 0, 501254133, 5000);
+animateCounter("atms", 0, 63580, 5000);
+animateCounter("branches", 0, 22500, 5000);
+animateCounter("cdm", 0, 6500, 5000);
+

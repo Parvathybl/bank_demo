@@ -29,20 +29,22 @@
       <nav>
         <div class="navs">
           <a href="#home">Home</a>
-          <a href="#account">Account</a>
+          
           <div class="dropdown service">
             <a href="#service">Services</a>
             <div class="dropdown-content srv">
-              <a href="#internet-banking">Internet Banking</a>
-              <a href="#personal-banking">Personal Banking</a>
-              <a href="business-banking">Business Banking</a>
-              <a href="#credit-cards">Credit Cards</a>
+              <a href="#internet-banking">Internet Banking</a><hr>
+              <a href="#personal-banking">Personal Banking</a><hr>
+              <a href="business-banking">Business Banking</a><hr>
+              <a href="#credit-cards">Credit Cards</a><hr>
               <a href="#loans">Loans</a>
             </div>
           </div>
           
-          <a href="#FAQ">FAQ</a>
-          <a href="#contact">Contact</a>
+          <a href="FAQ.html">FAQ</a>
+          
+          
+          <a href="contact.html">Contact</a>
 
         </div>
         
@@ -80,7 +82,7 @@
               <img src="images\yenosbi30823.webp">
               <h2>Download YONO App</h2>
               <p> Banking made simple, anytime, anyhere</p>
-              <button>Download Now</button>
+              <button onclick="window.location.href='https://play.google.com/store/apps/details?id=com.sbi.lotusintouch&hl=en_IN';">Download Now</button>
             </div>
           </div>
 
@@ -128,8 +130,8 @@
         </div>
         <div class="stat">
           <img src="images\bna-1.png">
-          <h3 id="bna">0</h3>
-          <h3>BNA</h3>
+          <h3 id="cdm">0</h3>
+          <h3>CDM</h3>
         </div>
         
       </div>
@@ -142,13 +144,15 @@
           <img src="images\banner3.jpg" alt="credit-card">
         </div>
         <div class="slides fade">
-          <img src="images\banner4.jpg" alt="rbi">
+          <a href="https://retail.onlinesbi.sbi/documents/BEAWARE07032022.pdf">
+          <img src="images\banner4.jpg" alt="rbi"></a>
         </div>
         <div class="slides fade">
           <img src="images\banner5.jpg" alt="ombudsman">
         </div>
         <div class="slides fade">
-          <img src="images\banner12.jpg" alt="mutual fund">
+          <a href="https://retail.onlinesbi.sbi/lamf/mflanding.htm">
+          <img src="images\banner12.jpg" alt="mutual fund"></a>
         </div>
         <div class="slides fade">
           <img src="images\banner8.jpg" alt="digital currency">
@@ -157,7 +161,8 @@
           <img src="images\banner10.jpg" alt="banner">
         </div>
         <div class="slides fade">
-          <img src="images\banner6.jpg" alt="dicgc">
+          <a href="https://www.dicgc.org.in/">
+          <img src="images\banner6.jpg" alt="dicgc"></a>
         </div>
         <div class="slides fade">
           <img src="images\banner29.jpg" alt="customer">
@@ -167,11 +172,22 @@
         </div>
 
         <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-        <a class="next" onclick="changeSlide(-1)">&#10095;</a>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+      </div>
+
+      <div class="social-media-icons">
+        <a href="https://www.facebook.com/StateBankOfIndia/" target="_blank"><img src="images\Facebook-Logosu.png" alt=facebook></a>
+        <a href="httphttps://x.com/TheOfficialSBI?mx=2" target="_blank"><img src="images\twitter_logo.jpg" alt=twitter></a>
+        <a href="https://www.youtube.com/theofficialsbi" target="_blank"><img src="images\youtube_logo.webp" alt=youtube></a>
+        <a href="https://www.linkedin.com/company/state-bank-of-india/" target="_blank"><img src="images/linkedin_logo.webp" alt=linkedin></a>
+        <a href="https://www.instagram.com/theofficialsbi/" target="_blank"><img src="images\_89663605_instagram_logo_976.jpg" alt=instagram></a>
+        <a href="https://www.pinterest.com/theofficialsbi/" target="_blank"><img src="images\Pinterest-logo.png" alt=pinterest></a>
       </div>
     <footer>
-
+      <div class="foot">
+        <p>&copy State Bank of India | All Rights Reserved</p>
     </footer>
+
 
     <script src="script.js"></script>
   </body>
