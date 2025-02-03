@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#2563eb"/>
+  
+  <!-- N1 Symbol -->
+  <g fill="#ffffff">
+    <!-- N -->
+    <path d="M60 60 L60 140 M60 60 L100 140 M100 60 L100 140" 
+          stroke="#ffffff" 
+          stroke-width="12" 
+          stroke-linecap="round" 
+          fill="none"/>
+    <!-- 1 -->
+    <path d="M120 60 L140 60 L140 140" 
+          stroke="#ffffff" 
+          stroke-width="12" 
+          stroke-linecap="round" 
+          fill="none"/>
+  </g>
+  
+  <!-- Decorative Ring -->
+  <circle cx="100" cy="100" r="85" 
+          stroke="#ffffff" 
+          stroke-width="2" 
+          fill="none" 
+          opacity="0.3"/>
+</svg>

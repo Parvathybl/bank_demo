@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <!-- Abstract N Symbol -->
+  <path d="M140 40 L140 100 L170 40 L170 100" stroke="#2563eb" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Bank Name -->
+  <text x="200" y="120" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="42" fill="#1e40af">NEXA BANK</text>
+  
+  <!-- Decorative Elements -->
+  <circle cx="200" cy="50" r="25" fill="none" stroke="#2563eb" stroke-width="2"/>
+  <circle cx="200" cy="50" r="20" fill="none" stroke="#3b82f6" stroke-width="2"/>
+  
+  <!-- Modern Line -->
+  <line x1="100" y1="140" x2="300" y2="140" stroke="#2563eb" stroke-width="2"/>
+  
+  <!-- Tagline -->
+  <text x="200" y="160" text-anchor="middle" font-family="Arial" font-size="14" fill="#3b82f6">Banking for the Digital Age</text>
+</svg>
