@@ -6,13 +6,18 @@ document.addEventListener("DOMContentLoaded", function () {
       const sender = document.getElementById("sender").value;
       const recipient = document.getElementById("recipient").value;
       const amount = document.getElementById("transfer-amount").value;
-      const pin = document.getElementById("transfer-pin").value;
+      
 
-      if (!sender || !recipient || !amount || !pin) {
+      if (!sender || !recipient || !amount) {
           transferStatus.innerText = "All fields are required!";
           transferStatus.style.color = "red";
           return;
       }
+
+      const numAmount = parseFloat(amount);
+        if (isNaN(numAmount) || numAmount <= 0) {
+            throw new Error("Invalid transfer amount");
+        }
 
       try {
           const response = await fetch("http://your-backend-api.com/transfer", {
@@ -20,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
               headers: {
                   "Content-Type": "application/json"
               },
-              body: JSON.stringify({ sender, recipient, amount, pin })
+              body: JSON.stringify({ sender, recipient, amount})
           });
 
           const data = await response.json();
