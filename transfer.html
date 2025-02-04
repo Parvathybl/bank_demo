@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Transfer Money</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <header>
+      <div class="head">
+        <div class="logo">
+          <img src="images\nexa-bank-logo.svg" alt="bank-logo"> 
+          </div>  
+      </div>
+
+      </header>
+      <div class="horizontal-line"></div>
+  
+    <div class="transfer-page">
+      <h1>Bank Transfer</h1>
+
+      <label for="sender">Your Account Number:</label>
+        <input type="text" id="sender" placeholder="Enter your account number" required>
+
+        <label for="recipient">Recipient Account Number:</label>
+        <input type="text" id="recipient" placeholder="Enter recipient's account number" required>
+
+        <label for="transfer-amount">Amount:</label>
+        <input type="number" id="transfer-amount" placeholder="Enter amount" required>
+
+        <label for="transfer-pin">PIN:</label>
+        <input type="password" id="transfer-pin" placeholder="Enter your PIN" required>
+
+        <button id="confirm-transfer">Transfer</button>
+
+        <p id="transfer-status"></p>
+
+        <a href="dashboard.html"><button class="back-button">Back to Dashboard</button></a>
+    </div>
+
+    <footer>
+      <div class="foot">
+        <p>&copy NEXA BANK | All Rights Reserved</p>
+    </footer>
+    <script src="transfer.js"></script>
+  </body>
+</html>

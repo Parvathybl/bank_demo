@@ -389,7 +389,7 @@ nav .signin:hover {
   border: 1px solid black;
   border-radius: 10px;
 }
-.balance-check, .transaction-options, .transaction-history {
+.balance-check, .transaction-options, .transfer-container, .transaction-history {
   margin-top: 20px;
   padding: 20px;
   background-color: #f9f9f9;
@@ -593,4 +593,51 @@ nav .signin:hover {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.transfer-page {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color:#f9f9f9;
+  text-align: center;
+}
+
+.transfer-page input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.transfer-page button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.transfer-page button:hover {
+  background-color: #0056b3;
+}
+
+.back-button {
+  background-color: #555;
+}
+
+.back-button:hover {
+  background-color: #333;
+}
+
+#transfer-button {
+  background-color: orangered;
+  color: white;
+  border: none;
+  padding: 10px 10px;
+
 }
