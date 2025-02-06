@@ -385,12 +385,6 @@ async function loadDashboard() {
 }
 }
 
-// function saveUserData(username, data) {
-//   const users = JSON.parse(localStorage.getItem("users")) || {};
-//   users[username] = data;
-//   localStorage.setItem("users", JSON.stringify(users));
-// }
-
 // Default user data structure
 const defaultUserData = {
   accountNumber: "",

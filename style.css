@@ -269,7 +269,7 @@ nav .signin:hover {
   justify-content: space-around;
   text-align: center;
   padding: 30px;
-  background-image: linear-gradient(rgba(207, 200, 156, 0.905), rgba(255, 223, 0, 0.5)), url("images\bank-office-interior-professional-banking-260nw-1432952840.webp");
+  background-image: linear-gradient(rgba(209, 186, 32, 0.905), rgba(236, 207, 19, 0.5)), url("images/background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

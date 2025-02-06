@@ -7,25 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
         transferStatus.style.color = isError ? "red" : "green";
     }
 
-    function getUsers() {
-        try {
-            return JSON.parse(localStorage.getItem("users")) || {};
-        } catch (error) {
-            console.error("Corrupted user data in localStorage", error);
-            return {};
-        }
-    }
-
-    function validateAccountExists(accountNumber) {
-        const users = getUsers();
-        for (const key in users) {
-            if (users[key].accountNumber === accountNumber) {
-                return { key, user: users[key] };
-            }
-        }
-        return null;
-    }
-
     confirmTransfer.addEventListener("click", async function () {
         const sender = document.getElementById("sender").value.trim();
         const recipient = document.getElementById("recipient").value.trim();
@@ -37,89 +18,37 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const numAmount = Number(amount);
-        if (!numAmount || numAmount <= 0) {
+        if (isNaN(numAmount) || numAmount <= 0) {
             showStatus("Invalid transfer amount!", true);
             return;
         }
 
         try {
-            let users = getUsers();
-            console.log("Users before transfer:", users);
+            confirmTransfer.disabled = true; // Prevent multiple clicks
 
-            // Validate sender and recipient accounts
-            const senderData = validateAccountExists(sender);
-            const recipientData = validateAccountExists(recipient);
-
-            if (!senderData) {
-                showStatus("Sender account does not exist!", true);
-                return;
-            }
-            if (!recipientData) {
-                showStatus("Recipient account does not exist!", true);
-                return;
-            }
-
-            const { key: senderKey, user: senderAccount } = senderData;
-            const { key: recipientKey, user: recipientAccount } = recipientData;
-
-            // Prevent self-transfer
-            if (sender === recipient) {
-                showStatus("Cannot transfer to the same account!", true);
-                return;
-            }
-
-            // Check sufficient balance
-            if (senderAccount.balance < numAmount) {
-                showStatus("Insufficient balance!", true);
-                return;
-            }
-
-            // Disable button to prevent double-click
-            confirmTransfer.disabled = true;
-
-            // Update balances
-            users[senderKey].balance = (senderAccount.balance - numAmount).toFixed(2);
-            users[recipientKey].balance = (recipientAccount.balance + numAmount).toFixed(2);
-
-            // Log transactions
-            users[senderKey].transactions.push({
-                type: "Sent",
-                amount: numAmount,
-                date: new Date().toISOString(),
-                to: recipientAccount.name || recipient
+            const response = await fetch("http://localhost:5000/api/transfer", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ sender, recipient, amount: numAmount })
             });
 
-            users[recipientKey].transactions.push({
-                type: "Received",
-                amount: numAmount,
-                date: new Date().toISOString(),
-                from: senderAccount.name || sender
-            });
+            const result = await response.json();
 
-            // Save updated user data
-            localStorage.setItem("users", JSON.stringify(users));
-
-            // Show success and reset form
-            showStatus("Transfer Successful!");
-            document.getElementById("sender").value = "";
-            document.getElementById("recipient").value = "";
-            document.getElementById("transfer-amount").value = "";
-
-            console.log("Users after transfer:", users);
-
-            // Redirect to dashboard after delay
-            setTimeout(() => {
-                window.location.href = "dashboard.html";
-            }, 2000);
-
+            if (result.success) {
+                showStatus(result.message);
+                setTimeout(() => {
+                    window.location.href = "dashboard.html"; // Redirect after success
+                }, 2000);
+            } else {
+                showStatus(result.message, true);
+            }
         } catch (error) {
-            showStatus("Failed to process transfer. Please try again.", true);
+            showStatus("Server error! Please try again later.", true);
             console.error("Transfer error:", error);
         } finally {
             confirmTransfer.disabled = false;
         }
     });
-
-    // Debugging info
-    console.log("Available accounts in transfer:", localStorage.getItem("users"));
 });
