@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const currentUser = sessionStorage.getItem("currentUser");
 
-        const response=await fetch(`http://localhost:5000/api/transaction/${selectedType}`, {
+        const response=await fetch(`https://backend-bank-kb1l.onrender.com/api/transaction/${selectedType}`, {
           method: `POST`,
           headers: {
             'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Login attempted for username:", username);
 
       try{
-      const response=await fetch('http://localhost:5000/api/login', {
+      const response=await fetch('https://backend-bank-kb1l.onrender.com/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             try {
-              const response = await fetch("http://localhost:5000/api/register",{
+              const response = await fetch("https://backend-bank-kb1l.onrender.com/api/register",{
                 method: "POST",
                 headers: {
                   "Content-Type":"application/json"
@@ -277,7 +277,7 @@ if (userDetailsForm) {
 
     try {
       // Use pendingUsername safely now that we checked it exists.
-      const response = await fetch(`http://localhost:5000/api/user-details/${pendingUsername.trim()}`, {
+      const response = await fetch(`https://backend-bank-kb1l.onrender.com/api/user-details/${pendingUsername.trim()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -341,7 +341,7 @@ async function loadDashboard() {
   }
 
   try{
-    const response=await fetch(`http://localhost:5000/api/user/${currentUser}`, {
+    const response=await fetch(`https://backend-bank-kb1l.onrender.com/api/user/${currentUser}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
