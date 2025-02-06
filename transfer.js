@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             confirmTransfer.disabled = true; // Prevent multiple clicks
 
-            const response = await fetch("http://localhost:5000/api/transfer", {
+            const response = await fetch("https://backend-bank-kb1l.onrender.com/api/transfer", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
