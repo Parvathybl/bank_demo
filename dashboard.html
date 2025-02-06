@@ -9,14 +9,14 @@
   <header>
       <div class="head">
         <div class="logo">
-          <img src="images\nexa-bank-logo.svg" alt="bank-logo">  
+          <img src="images/nexa-bank-logo.svg" alt="bank-logo">  
           </div> 
       </div>
     </header>
       <div class="horizontal-line"></div>
       <div class="heading">
     <h1>Welcome to Your Dashboard</h1>
-    <button id="logout-button">Log Out</button>
+    <button id="logout-button" type="button">Log Out</button>
     </div>
   
   <main>
@@ -41,7 +41,7 @@
         </div>
         <div class="personal-info">
           <p>Phone Number: <span id="phone"></span></p>
-          <p>Email: <span id="mail"></span></p>
+          <p>Email: <span id="email"></span></p>
         </div>
         <div class="personal-info">
           <p>Address: <span id="address"></span></p>
@@ -64,17 +64,17 @@
         <label for="amount">Enter Amount:</label>
         <input type="number" id="amount" min="1" required>
   
-        <button id="make-transaction">Submit</button>
+        <button id="make-transaction" type="button">Submit</button>
       </div>
       
       <div class="transfer-container">
         <a href="transfer.html">
-          <button id="transfer-button">Bank Transfer</button>
+          <button id="transfer-button" type="button">Bank Transfer</button>
         </a>
       </div>
   
       <div class="transaction-history">
-        <button id="toggle-btn">Show Transaction History</button>
+        <button id="toggle-btn" type="button">Show Transaction History</button>
         <ul id="transaction-list"></ul>
       </div>
   
@@ -85,6 +85,7 @@
   <footer>
     <div class="foot">
       <p>&copy NEXA BANK | All Rights Reserved</p>
+      </div>
   </footer>
   <script src="script.js"></script>
 </body>

@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const dobElement = document.getElementById("dob");
     const fathernameElement = document.getElementById("father_name");
     const phoneElement = document.getElementById("phone");
-    const mailElement = document.getElementById("mail");
+    const mailElement = document.getElementById("email");
     const genderElement = document.getElementById("gender");
     const addressElement = document.getElementById("address");
     const accounttype = document.getElementById("account_type");
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Transaction handler
     if (makeTransactionButton) {
-      makeTransactionButton.addEventListener("click", function () {
+      makeTransactionButton.addEventListener("click", async function () {
         const transactionAmount = parseFloat(amountInput.value);
         const selectedType = transactionType.value;
 
@@ -72,8 +72,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const currentUser = sessionStorage.getItem("currentUser");
-        const users = JSON.parse(localStorage.getItem("users")) || {};
-        const userData = users[currentUser];
+
+        const response=await fetch(`http://localhost:5000/api/transaction/${selectedType}`, {
+          method: `POST`,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: currentUser,
+            amount: transactionAmount,
+          })
+        });
+
+        const data=await response.json();
+        
+        if(response.ok) {
+          loadDashboard();
+        } else {
+          alert(data.message || "Transaction failed");
+        }
 
         if (selectedType === "withdraw" && transactionAmount > userData.balance) {
           alert("Insufficient balance for withdrawal.");
@@ -107,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Login form handler
   const loginForm = document.querySelector("#login-form");
   if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
+    loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const username = document.getElementById("username").value;
@@ -115,18 +132,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
       console.log("Login attempted for username:", username);
 
-      const users = JSON.parse(localStorage.getItem("users")) || {};
-      const userData = users[username];
+      try{
+      const response=await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      });
 
-      console.log("Found user data:", userData);
+    
+      const data = await response.json();
+      
 
-      if (userData && userData.password === password) {
+    
+      if (response.ok) {
         sessionStorage.setItem("currentUser", username);
         console.log("Login successful, redirecting to dashboard");
         window.location.href = 'dashboard.html';
       } else {
         alert("Invalid username or password");
       }
+    } catch (error) {
+      console.error("Connection error:", error);
+      alert("unable to connect to the server. Please make sure the server is running.");
+    }
     });
   }
 
@@ -134,19 +167,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const registerForm = document.querySelector("#register-form");
     if (registerForm) {
         console.log("Register form found");
-        registerForm.addEventListener("submit", (e) => {
+        registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             
             const usernameInput = document.getElementById("username");
+            const mailinput = document.getElementById("email");
             const passwordInput = document.getElementById("password");
             const confirmPasswordInput = document.getElementById("confirm-password");
             
-            if (!usernameInput || !passwordInput || !confirmPasswordInput) {
+            if (!usernameInput ||!mailinput || !passwordInput || !confirmPasswordInput) {
                 console.error("Required form elements not found");
                 return;
             }
 
             const username = usernameInput.value;
+            const email = mailinput.value;
             const password = passwordInput.value;
             const confirmPassword = confirmPasswordInput.value;
 
@@ -156,93 +191,129 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Check if username exists
-            const users = JSON.parse(localStorage.getItem("users")) || {};
-            if (users[username]) {
-                alert("Username already exists. Please choose another.");
-                return;
+            try {
+              const response = await fetch("http://localhost:5000/api/register",{
+                method: "POST",
+                headers: {
+                  "Content-Type":"application/json"
+                },
+                body: JSON.stringify({username,email,password, confirmPassword})
+              });
+
+              const data = await response.json();
+              console.log("Server Response:", data);
+
+              if(response.ok) {
+                alert("Registration successful!");
+                // After successful registration:
+                sessionStorage.setItem("pendingUsername", username.trim());
+                sessionStorage.setItem("pendingPassword", password);
+
+                window.location.href="user-details.html";
+              } else {
+                alert(data.message || "Registration failed!");
+              }
+            } catch (error) {
+              console.error("Error:", error);
+              alert("An error occured while registering. Please try again.");
             }
+          });
+        } 
 
-            // Store registration data in sessionStorage
-            sessionStorage.setItem("pendingUsername", username);
-            sessionStorage.setItem("pendingPassword", password);
-            
-            console.log("Registration data stored, redirecting to user details...");
-            window.location.href = 'user-details.html';
-        });
-    }
-    const userDetailsForm = document.querySelector("#user-details-form");
-    if (userDetailsForm) {
-        console.log("User details form found");
+//User Details         
+// User Details Form
+const userDetailsForm = document.querySelector("#user-details-form");
+if (userDetailsForm) {
+  console.log("User details form found");
 
-        const pendingUsername = sessionStorage.getItem("pendingUsername");
-        const pendingPassword = sessionStorage.getItem("pendingPassword");
+  // Retrieve values from session storage
+  const pendingUsername = sessionStorage.getItem("pendingUsername");
+  const pendingPassword = sessionStorage.getItem("pendingPassword");
 
-        if (!pendingUsername || !pendingPassword) {
-            alert("Please register first");
-            window.location.href = 'register.html';
-            return;
-        }
+  // Check if pendingUsername exists before adding the event listener
+  if (!pendingUsername) {
+    console.error("No pendingUsername found in sessionStorage!");
+    alert("Error: Username not found. Please register again.");
+    // Optionally, redirect the user:
+    // window.location.href = 'registration.html';
+    // Stop execution if username is missing:
+    throw new Error("pendingUsername is missing");
+  }
 
-        userDetailsForm.addEventListener("submit", (e) => {
-            e.preventDefault();
+  // Add the event listener once we know pendingUsername is valid
+  userDetailsForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-            const nameInput = document.getElementById("name");
-            const dobInput = document.getElementById("dob");
-            const fatherNameInput = document.getElementById("father_name");
-            const phoneInput = document.getElementById("phone");
-            const mailInput = document.getElementById("mail");
-            const genderInput = document.getElementById("gender");
-            const addressInput = document.getElementById("address");
-            const accounttypeInput = document.getElementById("account_type");
+    const nameInput = document.getElementById("name");
+    const dobInput = document.getElementById("dob");
+    const fatherNameInput = document.getElementById("father_name");
+    const phoneInput = document.getElementById("phone");
+    const mailInput = document.getElementById("email");
+    const genderInput = document.getElementById("gender");
+    const addressInput = document.getElementById("address");
+    const accounttypeInput = document.getElementById("account_type");
 
-            if (!nameInput || !dobInput || !genderInput || !addressInput || !fatherNameInput || !phoneInput || !mailInput || !accounttypeInput) {
-                console.error("Required user details form elements not found");
-                return;
-            }
-
-            const userData = {
-                username: pendingUsername,
-                password: pendingPassword,
-                accountNumber: generateAccountNumber(),
-                branchName: "Main Branch",
-                name: nameInput.value,
-                dob: dobInput.value,
-                father_name: fatherNameInput.value,
-                phone: phoneInput.value,
-                mail: mailInput.value,
-                gender: genderInput.value,
-                address: addressInput.value,
-                account_type: accounttypeInput.value,
-                balance: 0,
-                transactions: []
-            };
-
-            // Save user data
-            const users = JSON.parse(localStorage.getItem("users")) || {};
-            users[pendingUsername] = userData;
-            localStorage.setItem("users", JSON.stringify(users));
-
-            // Clean up session storage
-            sessionStorage.removeItem("pendingUsername");
-            sessionStorage.removeItem("pendingPassword");
-
-            alert("Registration complete! Please login.");
-            window.location.href = 'login.html';
-        });
+    if (!nameInput || !dobInput || !genderInput || !addressInput || !fatherNameInput || !phoneInput || !mailInput || !accounttypeInput) {
+      console.error("Required user details form elements not found");
+      return;
     }
 
-    document.getElementById("toggle-btn").onclick=function () {
-      const transactionList=document.getElementById("transaction-list");
-    
-      if (transactionList.style.display === "none") {
-        transactionList.style.display ="block";
-      }else {
-        transactionList.style.display="none";
-      }
+    const userData = {
+      username: pendingUsername,
+      password: pendingPassword,
+      accountNumber: generateAccountNumber(),
+      branchName: "Main Branch",
+      name: nameInput.value,
+      dob: dobInput.value,
+      father_name: fatherNameInput.value,
+      phone: phoneInput.value,
+      email: mailInput.value,
+      gender: genderInput.value,
+      address: addressInput.value,
+      account_type: accounttypeInput.value,
+      balance: 0,
+      transactions: []
     };
 
+    try {
+      // Use pendingUsername safely now that we checked it exists.
+      const response = await fetch(`http://localhost:5000/api/user-details/${pendingUsername.trim()}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        sessionStorage.removeItem("pendingUsername");
+        sessionStorage.removeItem("pendingPassword");
+
+        alert("Registration complete! Please login.");
+        window.location.href = 'login.html';
+      } else {
+        alert(data.message || "Error saving user details!");
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+      alert("An error occurred while saving user details. Please try again.");
+    }
   });
+}
+
+
+
+    const toggleBtn=document.getElementById("toggle-btn");
+    if(toggleBtn) {
+      toggleBtn.onclick=function() {
+        const transactionList = document.getElementById("transaction-list");
+        transactionList.style.display=transactionList.style.display ==="none" ? "block" : "none";
+      }
+    }
+      
+  
 
 
 // Helper functions
@@ -262,21 +333,24 @@ function updateTransactionHistory(transactions) {
   });
 }
 
-function loadDashboard() {
+async function loadDashboard() {
   const currentUser = sessionStorage.getItem("currentUser");
   if (!currentUser) {
     window.location.href = 'login.html';
     return;
   }
 
-  const users = JSON.parse(localStorage.getItem("users")) || {};
-  const userData = users[currentUser];
+  try{
+    const response=await fetch(`http://localhost:5000/api/user/${currentUser}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      }
+    });
 
-  if (!userData) {
-    alert("User not found. Redirecting to login.");
-    window.location.href = 'login.html';
-    return;
-  }
+    const userData = await response.json();
+  if (response.ok) {
 
   // Display user data
   const elements = {
@@ -290,7 +364,7 @@ function loadDashboard() {
     "gender": userData.gender,
     "address": userData.address,
     "phone": userData.phone,
-    "mail": userData.mail,
+    "email": userData.email,
     "account_type":userData.account_type
   };
 
@@ -301,13 +375,21 @@ function loadDashboard() {
 
   // Update transaction history
   updateTransactionHistory(userData.transactions);
+}else {
+  alert(userData.message || "Failed to load dashboard data");
+  window.location.href='login.html';
+}
+} catch (error) {
+  console.error("Error loading dashboard:", error);
+  window.location.href ='login.html';
+}
 }
 
-function saveUserData(username, data) {
-  const users = JSON.parse(localStorage.getItem("users")) || {};
-  users[username] = data;
-  localStorage.setItem("users", JSON.stringify(users));
-}
+// function saveUserData(username, data) {
+//   const users = JSON.parse(localStorage.getItem("users")) || {};
+//   users[username] = data;
+//   localStorage.setItem("users", JSON.stringify(users));
+// }
 
 // Default user data structure
 const defaultUserData = {
@@ -319,7 +401,7 @@ const defaultUserData = {
   dob: "",
   father_name: "",
   phone:"",
-  mail:"",
+  email:"",
   gender: "",
   address: "",
   account_type:"",
@@ -350,10 +432,9 @@ function animateCounter(id, start, end, duration) {
       clearInterval(interval);
     }
   }, 10);
-    
 }
 animateCounter("customers", 0, 501254133, 5000);
 animateCounter("atms", 0, 63580, 5000);
 animateCounter("branches", 0, 22500, 5000);
 animateCounter("cdm", 0, 6500, 5000);
-
+});
